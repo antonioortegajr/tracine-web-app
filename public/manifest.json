@@ -2,7 +2,7 @@
   "name": "Tracine",
   "short_name": "Tracine",
   "description": "Mobile AR image tracing tool",
-  "start_url": "/",
+  "start_url": "/tracine-web-app/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
