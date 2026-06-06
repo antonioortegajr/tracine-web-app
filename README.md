@@ -16,7 +16,13 @@ Next.js · Tailwind CSS · next-pwa · Vercel
 
 ## Getting Started
 
-Setup instructions coming after scaffold.
+npm install
+npm run dev
+
+## Deploy
+
+Deploy to Vercel: import this repo at vercel.com/new
+HTTPS is required for camera access — Vercel provides this automatically.
 
 ## PWA Install
 
