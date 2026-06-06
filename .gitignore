@@ -22,12 +22,17 @@
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
+
+# vscode
+.vscode/extensions.json
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
@@ -35,6 +40,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# cache
+.cache/
 
 # typescript
 *.tsbuildinfo
