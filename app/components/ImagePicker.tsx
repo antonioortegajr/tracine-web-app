@@ -34,7 +34,7 @@ export default function ImagePicker({ onImageSelected }: Props) {
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="fixed bottom-0 left-1/2 -translate-x-1/2 pb-safe pb-4 pt-4 px-6
+        className="fixed bottom-0 left-1/2 -translate-x-1/2 pb-safe-or-4 pt-4 px-6
           bg-white/90 rounded-t-xl text-black font-medium text-base
           min-w-[160px] min-h-[44px] active:bg-white/70 cursor-pointer"
       >

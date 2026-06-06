@@ -12,7 +12,7 @@ export default function Home() {
   const [overlayOpacity, setOverlayOpacity] = useState(1);
 
   return (
-    <div className="relative w-full h-dvh">
+    <div className="relative w-full h-dvh overflow-hidden touch-none">
       <CameraFeed />
       {selectedImage && <ImageOverlay imageUrl={selectedImage} opacity={overlayOpacity} />}
       {selectedImage && <OpacitySlider opacity={overlayOpacity} onChange={setOverlayOpacity} />}

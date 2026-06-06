@@ -37,7 +37,7 @@ export default function BgRemoveButton({ imageUrl, onResult, onError }: BgRemove
       type="button"
       onClick={handleRemove}
       disabled={processing}
-      className="fixed bottom-6 right-6 z-20 min-w-[44px] min-h-[44px]
+      className="fixed bottom-safe-or-6 right-6 z-20 min-w-[44px] min-h-[44px]
         bg-white/90 rounded-full px-4 py-2 text-black font-medium text-sm
         shadow-md active:bg-white/70 disabled:opacity-50 cursor-pointer
         disabled:cursor-not-allowed"

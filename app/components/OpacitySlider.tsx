@@ -7,7 +7,7 @@ type OpacitySliderProps = {
 
 export default function OpacitySlider({ opacity, onChange }: OpacitySliderProps) {
   return (
-    <div className="fixed bottom-24 left-0 right-0 px-6 z-20">
+    <div className="fixed bottom-24 left-0 right-0 px-6 pb-safe-or-4 z-20">
       <input
         type="range"
         min="0"
