@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
 
 export const viewport: Viewport = {
   themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export const metadata: Metadata = {
@@ -26,7 +30,7 @@ export const metadata: Metadata = {
     title: "Tracine",
   },
   icons: {
-    apple: "/icons/icon-192.png",
+    apple: "/icons/apple-touch-icon.png",
   },
 };
 
