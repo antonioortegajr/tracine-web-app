@@ -1,3 +1,5 @@
+import CameraFeed from "./components/CameraFeed";
+
 export default function Home() {
-  return <h1>Tracine</h1>;
+  return <CameraFeed />;
 }
