@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="relative w-full h-dvh overflow-hidden">
       <CameraFeed />
-      {selectedImage && <ImageOverlay imageUrl={selectedImage} opacity={overlayOpacity} />}
+      {selectedImage && <ImageOverlay key={selectedImage} imageUrl={selectedImage} opacity={overlayOpacity} />}
       {selectedImage && <OpacitySlider opacity={overlayOpacity} onChange={setOverlayOpacity} />}
       {selectedImage && (
         <BgRemoveButton
