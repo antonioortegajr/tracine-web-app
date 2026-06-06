@@ -12,17 +12,17 @@ Mobile-first PWA for AR image tracing.
 
 ## Tech Stack
 
-Next.js · Tailwind CSS · next-pwa · Vercel
+Next.js · Tailwind CSS · next-pwa
 
-## Getting Started
+## Local Development
 
 npm install
 npm run dev
 
-## Deploy
-
-Deploy to Vercel: import this repo at vercel.com/new
-HTTPS is required for camera access — Vercel provides this automatically.
+To test on mobile (same WiFi network):
+- Find your machine's local IP (e.g. 192.168.x.x)
+- Open http://<your-ip>:3000 in your mobile browser
+- Note: camera access requires HTTPS on most mobile browsers — use ngrok or similar for a secure tunnel if needed
 
 ## PWA Install
 
