@@ -82,7 +82,7 @@ export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCame
       const newZoom =
         cameraPinchRef.current.initialZoom *
         (currentDistance / cameraPinchRef.current.initialDistance);
-      onCameraZoom?.(Math.min(5, Math.max(1, newZoom)));
+      onCameraZoom?.(Math.min(5, Math.max(0.2, newZoom)));
       return;
     }
 
