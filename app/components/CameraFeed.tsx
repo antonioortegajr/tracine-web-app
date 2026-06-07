@@ -4,7 +4,11 @@ import { useRef, useEffect, useState } from "react";
 
 type CameraState = "loading" | "active" | "error";
 
-export default function CameraFeed() {
+interface CameraFeedProps {
+  zoom?: number;
+}
+
+export default function CameraFeed({ zoom = 1 }: CameraFeedProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CameraState>("loading");
@@ -54,7 +58,7 @@ export default function CameraFeed() {
   }, []);
 
   return (
-    <div className="relative w-full h-dvh bg-black">
+    <div className="relative w-full h-dvh bg-black overflow-hidden">
       {state === "loading" && (
         <div className="absolute inset-0 flex items-center justify-center bg-black" />
       )}
@@ -71,6 +75,10 @@ export default function CameraFeed() {
         playsInline
         muted
         className={`w-full h-full object-cover ${state !== "active" ? "hidden" : ""}`}
+        style={{
+          transform: `scale(${zoom})`,
+          transformOrigin: "center",
+        }}
       />
     </div>
   );

@@ -5,13 +5,20 @@ import { useRef, useState } from "react";
 interface ImageOverlayProps {
   imageUrl: string;
   opacity: number;
+  cameraZoom?: number;
+  onCameraZoom?: (zoom: number) => void;
 }
 
-export default function ImageOverlay({ imageUrl, opacity }: ImageOverlayProps) {
+export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCameraZoom }: ImageOverlayProps) {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const imgRef = useRef<HTMLImageElement>(null);
   const pinchRef = useRef({ initialDistance: 0, initialScale: 1 });
   const dragRef = useRef({ startX: 0, startY: 0, startPosX: 0, startPosY: 0 });
+  const cameraPinchRef = useRef({ initialDistance: 0, initialZoom: 1 });
+  const pinchModeRef = useRef<'overlay' | 'camera' | null>(null);
+  const cameraZoomRef = useRef(1);
+  cameraZoomRef.current = cameraZoom;
 
   function getTouchDistance(touches: React.TouchList) {
     const dx = touches[0].clientX - touches[1].clientX;
@@ -28,14 +35,43 @@ export default function ImageOverlay({ imageUrl, opacity }: ImageOverlayProps) {
         startPosY: position.y,
       };
     } else if (e.touches.length === 2) {
-      pinchRef.current = {
-        initialDistance: getTouchDistance(e.touches),
-        initialScale: scale,
-      };
+      const rect = imgRef.current?.getBoundingClientRect();
+      const bothInside =
+        rect &&
+        Array.from(e.touches).every(
+          (t) =>
+            t.clientX >= rect.left &&
+            t.clientX <= rect.right &&
+            t.clientY >= rect.top &&
+            t.clientY <= rect.bottom,
+        );
+
+      if (bothInside) {
+        pinchRef.current = {
+          initialDistance: getTouchDistance(e.touches),
+          initialScale: scale,
+        };
+        pinchModeRef.current = "overlay";
+      } else {
+        cameraPinchRef.current = {
+          initialDistance: getTouchDistance(e.touches),
+          initialZoom: cameraZoomRef.current,
+        };
+        pinchModeRef.current = "camera";
+      }
     }
   }
 
   function handleTouchMove(e: React.TouchEvent) {
+    if (pinchModeRef.current === "camera" && e.touches.length === 2) {
+      const currentDistance = getTouchDistance(e.touches);
+      const newZoom =
+        cameraPinchRef.current.initialZoom *
+        (currentDistance / cameraPinchRef.current.initialDistance);
+      onCameraZoom?.(Math.min(5, Math.max(1, newZoom)));
+      return;
+    }
+
     if (e.touches.length === 1) {
       const dx = e.touches[0].clientX - dragRef.current.startX;
       const dy = e.touches[0].clientY - dragRef.current.startY;
@@ -58,9 +94,10 @@ export default function ImageOverlay({ imageUrl, opacity }: ImageOverlayProps) {
       style={{ touchAction: "none" }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      onTouchEnd={() => {}}
+      onTouchEnd={() => { pinchModeRef.current = null; }}
     >
       <img
+        ref={imgRef}
         src={imageUrl}
         alt="Trace overlay"
         draggable={false}
