@@ -58,7 +58,7 @@ export default function CameraFeed({ zoom = 1 }: CameraFeedProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-dvh bg-black overflow-hidden">
+    <div className="relative w-full h-dvh bg-white overflow-hidden">
       {state === "loading" && (
         <div className="absolute inset-0 flex items-center justify-center bg-black" />
       )}
