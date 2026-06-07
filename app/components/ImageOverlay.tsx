@@ -26,6 +26,20 @@ export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCame
     return Math.hypot(dx, dy);
   }
 
+  function getImageContentRect(img: HTMLImageElement): DOMRect | null {
+    const rect = img.getBoundingClientRect();
+    const { naturalWidth, naturalHeight } = img;
+    if (!naturalWidth || !naturalHeight) return null;
+    const scaleX = rect.width / naturalWidth;
+    const scaleY = rect.height / naturalHeight;
+    const contentScale = Math.min(scaleX, scaleY);
+    const contentWidth = naturalWidth * contentScale;
+    const contentHeight = naturalHeight * contentScale;
+    const offsetX = (rect.width - contentWidth) / 2;
+    const offsetY = (rect.height - contentHeight) / 2;
+    return new DOMRect(rect.left + offsetX, rect.top + offsetY, contentWidth, contentHeight);
+  }
+
   function handleTouchStart(e: React.TouchEvent) {
     if (e.touches.length === 1) {
       dragRef.current = {
@@ -34,8 +48,8 @@ export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCame
         startPosX: position.x,
         startPosY: position.y,
       };
-    } else if (e.touches.length === 2) {
-      const rect = imgRef.current?.getBoundingClientRect();
+    } else if (e.touches.length === 2 && imgRef.current) {
+      const rect = getImageContentRect(imgRef.current);
       const bothInside =
         rect &&
         Array.from(e.touches).every(
@@ -79,7 +93,7 @@ export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCame
         x: dragRef.current.startPosX + dx,
         y: dragRef.current.startPosY + dy,
       });
-    } else if (e.touches.length === 2) {
+    } else if (e.touches.length === 2 && pinchModeRef.current === "overlay") {
       const currentDistance = getTouchDistance(e.touches);
       const newScale =
         pinchRef.current.initialScale *
@@ -95,6 +109,7 @@ export default function ImageOverlay({ imageUrl, opacity, cameraZoom = 1, onCame
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={() => { pinchModeRef.current = null; }}
+      onTouchCancel={() => { pinchModeRef.current = null; }}
     >
       <img
         ref={imgRef}
