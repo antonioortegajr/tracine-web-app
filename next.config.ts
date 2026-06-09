@@ -4,7 +4,7 @@ import withPWA from "next-pwa";
 const nextConfig: NextConfig = {
   turbopack: {},
   output: "export",
-  basePath: "/tracine-web-app",
+  basePath: "/tracing-web-app",
   images: { unoptimized: true },
 };
 
