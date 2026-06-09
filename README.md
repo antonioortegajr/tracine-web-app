@@ -1,4 +1,4 @@
-# Tracine
+# Tracing
 
 Mobile-first PWA for AR image tracing.
 
