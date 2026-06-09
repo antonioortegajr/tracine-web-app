@@ -11,6 +11,7 @@ interface CameraFeedProps {
 function getPlatformInstructions(): string {
   const ua = navigator.userAgent;
   if (/iPhone|iPad|iPod/i.test(ua)) {
+    if (/CriOS/i.test(ua)) return "Settings → Chrome → Camera → Allow";
     return "Settings → Safari → Camera → Allow";
   }
   if (/Android/i.test(ua)) {
